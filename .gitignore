@@ -1,0 +1,26 @@
+# Visual Studio
+.vs/
+*.user
+*.VC.db
+
+# Build folders
+x64/
+x86/
+Debug/
+Release/
+out/
+
+# Build artifacts
+*.obj
+*.exe
+*.pdb
+*.ilk
+*.log
+
+# CMake (if ever used)
+CMakeFiles/
+CMakeCache.txt
+
+# OS junk
+.DS_Store
+Thumbs.db
