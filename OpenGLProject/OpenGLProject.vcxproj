@@ -105,7 +105,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\Thinkpad\source\repos\OpenGLProject\OpenGLProject\external\glad\include;C:\Users\Thinkpad\source\repos\OpenGLProject\OpenGLProject\external\glfw\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Thinkpad\source\repos\OpenGLProject\OpenGLProject\external\glad\include;C:\Users\Thinkpad\source\repos\OpenGLProject\OpenGLProject\external\glfw\include;C:\Users\Thinkpad\source\repos\OpenGLProject\OpenGLProject\include;C:\Users\Thinkpad\source\repos\OpenGLProject\OpenGLProject\shaders;C:\Users\Thinkpad\source\repos\OpenGLProject\OpenGLProject\external\glad\include\stb</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,10 +135,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="external\glad\src\glad.c" />
+    <ClCompile Include="src\EBO.cpp" />
     <ClCompile Include="src\OpenGLProject.cpp" />
+    <ClCompile Include="src\ShaderClass.cpp" />
+    <ClCompile Include="src\stb.cpp" />
+    <ClCompile Include="src\Texture.cpp" />
+    <ClCompile Include="src\VAO.cpp" />
+    <ClCompile Include="src\VBO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
+    <None Include="shaders\default.frag" />
+    <None Include="shaders\default.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\EBO.h" />
+    <ClInclude Include="include\ShaderClass.h" />
+    <ClInclude Include="include\Texture.h" />
+    <ClInclude Include="include\VAO.h" />
+    <ClInclude Include="include\VBO.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
