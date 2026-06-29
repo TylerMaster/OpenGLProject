@@ -5,27 +5,19 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <stb_image.h>
-
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include "Texture.h"
 #include "ShaderClass.h"
 #include "VAO.h"
 #include "EBO.h"
+#include "Camera.h"
 
 
+const unsigned int width = 800;
+const unsigned int height = 800;
 
-const char* vertexShaderSource = "#version 330 core\n"
-"layout (location = 0) in vec3 aPos;\n"
-"void main()\n"
-"{\n"
-"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-"}\0";
-
-const char* fragmentShaderSource = "#version 330 core\n"
-"out vec4 FragColor;\n"
-"void main()\n"
-"{\n"
-"   FragColor = vec4(0.8f, 0.3f, 0.02f, 1.0f);\n"
-"}\n\0";
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
@@ -42,42 +34,29 @@ int main()
     GLfloat vertices[] =
     {
 
-     -0.5f, -0.5f, 0.0f,    1.0f, 0.0f, 0.0f,     0.0f, 0.0f,
-     -0.5f, 0.5f, 0.0f,     0.0f, 1.0f, 0.0f,     0.0f, 1.0f,
-      0.5f, 0.5f, 0.0f,     0.0f, 0.0f, 1.0f,     1.0f, 1.0f,
-      0.5f, -0.5f, 0.0f,    1.0f, 1.0f, 1.0f,     1.0f, 0.0f
+     -0.5f, 0.0f,  0.5f,    0.83f, 0.70f, 0.44f,     0.0f, 0.0f,
+     -0.5f, 0.0f, -0.5f,    0.83f, 0.70f, 0.44f,     5.0f, 0.0f,
+      0.5f, 0.0f, -0.5f,    0.83f, 0.70f, 0.44f,     0.0f, 0.0f,
+      0.5f, 0.0f,  0.5f,    0.83f, 0.70f, 0.44f,     5.0f, 0.0f,
+      0.0f, 0.8f,  0.0f,    0.92f, 0.86f, 0.76f,     2.5f, 5.0f
 
-     /*-0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f,     0.8f, 0.3f,  0.02f,
-     0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f,       0.8f, 0.3f,  0.02f,
-     0.0f, 0.5f * float(sqrt(3)) * 2 / 3, 0.0f,    1.0f, 0.6f,  0.32f,
-     -0.5f / 2, 0.5f * float(sqrt(3)) / 6, 0.0f,   0.9f, 0.45f, 0.17f,
-     0.5f / 2, 0.5f * float(sqrt(3)) / 6, 0.0f,    0.9f, 0.45f, 0.17f,
-     0.0f, -0.5f * float(sqrt(3)) / 3, 0.0f,       0.8f, 0.3f,  0.02f
-     */
-        
-           /*
-            -0.5f, -0.5f, 0.0f,
-             0.5f, -0.5f, 0.0f,
-             0.5f,  0.5f, 0.0f,
-
-             // second triangle
-             -0.5f, -0.5f, 0.0f,
-              0.5f,  0.5f, 0.0f,
-             -0.5f,  0.5f, 0.0f*/
-         
+     
     };
 
     GLuint indices[] =
     {
         0, 2, 1, //Upper triangle
-        0, 3, 2  //Lower triangle
+        0, 2, 3,  //Lower triangle
+        0, 1, 4,
+        1, 2, 4,
+        2, 3, 4,
+        3, 0, 4
 
-        /* 0, 3, 5,
-         3, 2, 4,
-         5, 4, 1 */
+
+       
     };
 
-    GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(width, height, "LearnOpenGL", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -92,25 +71,9 @@ int main()
         return -1;
     }
     gladLoadGL();
-    glViewport(0, 0, 800, 600);
+    glViewport(0, 0, width, height);
 
-    /*GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShader);
 
-    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
-
-    GLuint shaderProgram = glCreateProgram();
-
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-
-    glLinkProgram(shaderProgram);
-
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);*/
 
     Shader shaderProgram("shaders/default.vert", "shaders/default.frag");
 
@@ -127,7 +90,7 @@ int main()
     VBO1.Unbind();
     EBO1.Unbind();
 
-    GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
+
 
 
     // Texture
@@ -163,19 +126,27 @@ int main()
 
 
 
-    Texture cat("textures/cat.jpg", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGB, GL_UNSIGNED_BYTE);
+    Texture cat("textures/brick.jpg", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGB, GL_UNSIGNED_BYTE);
     cat.texUnit(shaderProgram, "tex0", 0);
+
+
+
+    glEnable(GL_DEPTH_TEST);
+
+    Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
 
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         shaderProgram.Activate();
-        glUniform1f(uniID, 0.5f);
+
+        camera.Inputs(window);
+        camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
 
         cat.Bind();
         VAO1.Bind();
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(int), GL_UNSIGNED_INT, 0);
         glfwSwapBuffers(window);
        glfwPollEvents();
     }

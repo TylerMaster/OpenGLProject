@@ -105,7 +105,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\Thinkpad\source\repos\OpenGLProject\OpenGLProject\external\glad\include;C:\Users\Thinkpad\source\repos\OpenGLProject\OpenGLProject\external\glfw\include;C:\Users\Thinkpad\source\repos\OpenGLProject\OpenGLProject\include;C:\Users\Thinkpad\source\repos\OpenGLProject\OpenGLProject\shaders;C:\Users\Thinkpad\source\repos\OpenGLProject\OpenGLProject\external\glad\include\stb</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Thinkpad\source\repos\OpenGLProject\OpenGLProject\external\glad\include;C:\Users\Thinkpad\source\repos\OpenGLProject\OpenGLProject\external\glfw\include;C:\Users\Thinkpad\source\repos\OpenGLProject\OpenGLProject\include;C:\Users\Thinkpad\source\repos\OpenGLProject\OpenGLProject\shaders;C:\Users\Thinkpad\source\repos\OpenGLProject\OpenGLProject\external\glad\include\stb;C:\Users\Thinkpad\source\repos\OpenGLProject\OpenGLProject\external\glad\include\glm</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,6 +135,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="external\glad\src\glad.c" />
+    <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\EBO.cpp" />
     <ClCompile Include="src\OpenGLProject.cpp" />
     <ClCompile Include="src\ShaderClass.cpp" />
@@ -149,6 +150,7 @@
     <None Include="shaders\default.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\EBO.h" />
     <ClInclude Include="include\ShaderClass.h" />
     <ClInclude Include="include\Texture.h" />
